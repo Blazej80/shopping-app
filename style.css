@@ -1,0 +1,103 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 350px;
+  margin: 50px auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.product-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.product-list li {
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  text-align: left;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.product-name {
+  flex-grow: 2;
+  text-align: left;
+  padding-right: 10px;
+  font-size: 18px;
+}
+
+.readonly-field {
+  width: 40px;
+  font-size: 18px;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+.checkbox {
+  transform: scale(1.5);
+  margin-right: 10px;
+}
+
+.increment-section {
+  display: none;
+  align-items: center;
+  gap: 5px;
+}
+
+.increment-section button,
+.increment-value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  margin: 0;
+  text-align: center;
+}
+
+.increment-value {
+  font-size: 16px;
+  width: 30px;
+}
+
+.next-button {
+  float: right; /* Align Next button to the right */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.previous-button {
+  float: left; /* Align Previous button to the left */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 5px;
+}

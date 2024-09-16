@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zakupy</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Lodówka 1</h1>
+      <ul class="product-list">
+        <li class="product-item">
+          <span class="product-name">Serek homogenizowany</span>
+          <input type="text" class="readonly-field" value="4" readonly />
+          <input
+            type="checkbox"
+            class="checkbox"
+            onchange="toggleIncrement(this)"
+          />
+          <div class="increment-section">
+            <button onclick="decrement(this)">-</button>
+            <span class="increment-value">0</span>
+            <button onclick="increment(this, 4)">+</button>
+          </div>
+        </li>
+        <li class="product-item">
+          <span class="product-name">Kefir</span>
+          <input type="text" class="readonly-field" value="5" readonly />
+          <input
+            type="checkbox"
+            class="checkbox"
+            onchange="toggleIncrement(this)"
+          />
+          <div class="increment-section">
+            <button onclick="decrement(this)">-</button>
+            <span class="increment-value">0</span>
+            <button onclick="increment(this, 5)">+</button>
+          </div>
+        </li>
+        <li class="product-item">
+          <span class="product-name">Jajka</span>
+          <input type="text" class="readonly-field" value="2" readonly />
+          <input
+            type="checkbox"
+            class="checkbox"
+            onchange="toggleIncrement(this)"
+          />
+          <div class="increment-section">
+            <button onclick="decrement(this)">-</button>
+            <span class="increment-value">0</span>
+            <button onclick="increment(this, 2)">+</button>
+          </div>
+        </li>
+      </ul>
+
+      <button class="next-button" onclick="location.href='freezer.html'">
+        Next
+      </button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

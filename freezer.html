@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zamrażarka</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Zamrażarka</h1>
+      <ul class="product-list">
+        <li class="product-item">
+          <span class="product-name">Lody</span>
+          <input type="text" class="readonly-field" value="1" readonly />
+          <input
+            type="checkbox"
+            class="checkbox"
+            onchange="toggleIncrement(this)"
+          />
+          <div class="increment-section">
+            <button onclick="decrement(this)">-</button>
+            <span class="increment-value">0</span>
+            <button onclick="increment(this, 1)">+</button>
+          </div>
+        </li>
+        <li class="product-item">
+          <span class="product-name">Warzywa</span>
+          <input type="text" class="readonly-field" value="2" readonly />
+          <input
+            type="checkbox"
+            class="checkbox"
+            onchange="toggleIncrement(this)"
+          />
+          <div class="increment-section">
+            <button onclick="decrement(this)">-</button>
+            <span class="increment-value">0</span>
+            <button onclick="increment(this, 2)">+</button>
+          </div>
+        </li>
+      </ul>
+
+      <button class="previous-button" onclick="location.href='index.html'">
+        Previous
+      </button>
+      <!-- Previous button -->
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
