@@ -50,7 +50,8 @@ header h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px; /* Add some space between elements */
+  flex-wrap: wrap; /* Ensure elements wrap properly */
+  gap: 10px;
 }
 
 .product-name {
@@ -69,32 +70,31 @@ header h1 {
 
 /* Custom checkbox styling */
 .checkbox {
-  width: 25px; /* Adjusted size */
+  width: 25px;
   height: 25px;
-  margin-right: 10px;
 }
 
 /* Increment Section */
 .increment-section {
   display: flex;
-  align-items: center; /* Vertically center the buttons and value */
-  gap: 5px; /* Space between elements */
+  align-items: center;
+  gap: 5px;
 }
 
 .increment-section button,
 .increment-value {
-  width: 30px; /* Smaller buttons */
+  width: 30px;
   height: 30px;
-  font-size: 16px; /* Smaller font for buttons */
+  font-size: 16px;
   border: 2px solid var(--primary-color);
   background-color: #ffffff;
   color: var(--primary-color);
   cursor: pointer;
   text-align: center;
   border-radius: 5px;
-  display: flex; /* Make buttons flex containers */
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .increment-section button:hover {
@@ -106,8 +106,8 @@ header h1 {
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  padding: 0 10px; /* Spacing inside the box */
-  min-width: 30px; /* Ensure consistent width */
+  padding: 0 10px;
+  min-width: 30px;
 }
 
 /* Hidden class to hide elements */
@@ -177,10 +177,8 @@ button {
   }
 
   .product-item {
-    display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 10px;
   }
 
   .product-name {
@@ -191,7 +189,7 @@ button {
   .readonly-field,
   .checkbox {
     width: auto;
-    margin-top: 10px;
+    margin-top: 5px;
   }
 
   .button-container button {
