@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista Zakupów</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Header section -->
+    <header>
+      <h1>Lista Zakupów</h1>
+    </header>
+
+    <!-- Main content -->
+    <div class="container">
+      <!-- Display list title and date -->
+      <h2 id="list-date">Data listy: <span id="list-timestamp"></span></h2>
+
+      <!-- Product list section -->
+      <div id="shopping-list-items"></div>
+    </div>
+
+    <!-- Button for returning to the main page -->
+    <div class="button-container">
+      <button class="back-button" onclick="location.href='zakupy.html'">
+        Powrót
+      </button>
+    </div>
+
+    <!-- Include Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: 'AIzaSyBZ4-356GHxDO5rMknQ2v07FyOUpGnMzxE',
+        authDomain: 'shopping-app-c6474.firebaseapp.com',
+        databaseURL:
+          'https://shopping-app-c6474-default-rtdb.europe-west1.firebasedatabase.app',
+        projectId: 'shopping-app-c6474',
+        storageBucket: 'shopping-app-c6474.appspot.com',
+        messagingSenderId: '55536136637',
+        appId: '1:55536136637:web:58fe8e0f45c7bffcb8e2d4',
+        measurementId: 'G-ZZHPBYYXRL',
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Get list ID from URL query parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const listId = urlParams.get('listId');
+
+      // Create a global products map
+      let productsMap = {};
+
+      // Fetch products and create a mapping of product names to their data
+      firebase
+        .database()
+        .ref('products')
+        .once('value')
+        .then(snapshot => {
+          const productsData = snapshot.val();
+          for (const key in productsData) {
+            const product = productsData[key];
+            productsMap[product.name] = product;
+          }
+          // After fetching products, fetch and display the shopping list
+          fetchShoppingList();
+        })
+        .catch(error => {
+          console.error('Error fetching products:', error);
+        });
+
+      // Function to fetch and display the selected shopping list
+      function fetchShoppingList() {
+        const shoppingListRef = firebase
+          .database()
+          .ref(`shoppingLists/${listId}`);
+
+        shoppingListRef.once('value', snapshot => {
+          const list = snapshot.val();
+          const listContainer = document.getElementById('shopping-list-items');
+          const timestampElement = document.getElementById('list-timestamp');
+
+          if (list && list.items) {
+            // Set the list timestamp
+            const date = new Date(list.timestamp);
+            timestampElement.textContent = date.toLocaleString();
+
+            // Sort items by shoporder field
+            const sortedItems = list.items.sort((a, b) => {
+              const productA = productsMap[a.name];
+              const productB = productsMap[b.name];
+              if (productA && productB) {
+                return productA.shoporder - productB.shoporder;
+              } else {
+                return 0;
+              }
+            });
+
+            // Render the sorted items in a similar style to the index page
+            sortedItems.forEach(item => {
+              const productElement = document.createElement('li');
+              productElement.classList.add('product-item');
+
+              // Create elements for product name and quantity
+              const productName = document.createElement('span');
+              productName.classList.add('product-name');
+              productName.textContent = item.name;
+
+              const quantity = document.createElement('span');
+              quantity.classList.add('product-quantity');
+              quantity.textContent = `x${item.selectedQuantity}`;
+
+              // Append elements to the product item
+              productElement.appendChild(productName);
+              productElement.appendChild(quantity);
+
+              // Add product item to the container
+              listContainer.appendChild(productElement);
+            });
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

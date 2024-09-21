@@ -1,43 +1,60 @@
+/* Define color variables */
+:root {
+  --primary-color: #7f1734; /* Claret */
+  --secondary-color: #add8e6; /* Light Blue */
+  --background-color: #f0f8ff; /* Lightest Blue */
+  --text-color: #333333; /* Dark Gray */
+  --button-hover-color: #9f1f44; /* Lighter Claret */
+}
+
+/* Reset and base styles */
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .container {
-  width: 350px;
-  margin: 50px auto;
+  width: 95%;
+  max-width: 600px;
+  margin: 20px auto;
 }
 
-h1 {
+/* Header styles */
+header {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  padding: 20px 0;
   text-align: center;
 }
 
-.product-list {
-  list-style-type: none;
-  padding: 0;
+header h1 {
+  margin: 0;
+  font-size: 2em;
 }
 
-.product-list li {
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ddd;
-  text-align: left;
-  background-color: #f9f9f9;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Product list styles */
+#product-list h2 {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 5px;
+  margin-top: 20px;
 }
 
 .product-item {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  padding: 10px;
+  margin: 10px 0;
   display: flex;
   justify-content: space-between;
-  width: 100%;
   align-items: center;
+  gap: 10px; /* Add some space between elements */
 }
 
 .product-name {
   flex-grow: 2;
-  text-align: left;
-  padding-right: 10px;
   font-size: 18px;
 }
 
@@ -47,57 +64,158 @@ h1 {
   text-align: center;
   border: none;
   background-color: transparent;
-  pointer-events: none;
+  color: var(--text-color);
 }
 
+/* Custom checkbox styling */
 .checkbox {
-  transform: scale(1.5);
+  width: 25px; /* Adjusted size */
+  height: 25px;
   margin-right: 10px;
 }
 
+/* Increment Section */
 .increment-section {
-  display: none;
-  align-items: center;
-  gap: 5px;
+  display: flex;
+  align-items: center; /* Vertically center the buttons and value */
+  gap: 5px; /* Space between elements */
 }
 
 .increment-section button,
 .increment-value {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
+  width: 30px; /* Smaller buttons */
   height: 30px;
-  font-size: 16px;
-  border: 1px solid #ccc;
+  font-size: 16px; /* Smaller font for buttons */
+  border: 2px solid var(--primary-color);
+  background-color: #ffffff;
+  color: var(--primary-color);
   cursor: pointer;
-  margin: 0;
   text-align: center;
+  border-radius: 5px;
+  display: flex; /* Make buttons flex containers */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+}
+
+.increment-section button:hover {
+  background-color: var(--secondary-color);
 }
 
 .increment-value {
-  font-size: 16px;
-  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  padding: 0 10px; /* Spacing inside the box */
+  min-width: 30px; /* Ensure consistent width */
+}
+
+/* Hidden class to hide elements */
+.hidden {
+  display: none;
+}
+
+/* Button styles */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+button {
+  flex: 1 1 45%;
+  padding: 15px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.save-button:hover {
+  background-color: var(--button-hover-color);
+}
+
+.save-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
 .next-button {
-  float: right; /* Align Next button to the right */
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin-top: 20px;
-  border-radius: 5px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
 }
 
-.previous-button {
-  float: left; /* Align Previous button to the left */
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin-top: 20px;
-  border-radius: 5px;
+.next-button:hover {
+  background-color: #b0d0e6;
+}
+
+/* Validation message styles */
+.validation-message {
+  color: red;
+  font-size: 16px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Footer styles (optional) */
+footer {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 40px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .container {
+    width: 100%;
+    margin: 10px auto;
+  }
+
+  .product-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .product-name,
+  .readonly-field {
+    margin-bottom: 10px;
+  }
+
+  /* Larger touch targets for mobile */
+  .increment-section button,
+  .increment-value {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .checkbox {
+    width: 25px;
+    height: 25px;
+  }
+
+  /* Adjust button sizes for mobile */
+  button {
+    flex: 1 1 100%;
+    font-size: 20px;
+  }
+
+  .save-button,
+  .next-button {
+    margin-bottom: 10px;
+  }
+
+  .validation-message {
+    font-size: 18px;
+  }
 }

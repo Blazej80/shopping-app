@@ -1,64 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Meta tags for responsive design -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zakupy</title>
+    <!-- Link to the stylesheet -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <h1>Lodówka 1</h1>
-      <ul class="product-list">
-        <li class="product-item">
-          <span class="product-name">Serek homogenizowany</span>
-          <input type="text" class="readonly-field" value="4" readonly />
-          <input
-            type="checkbox"
-            class="checkbox"
-            onchange="toggleIncrement(this)"
-          />
-          <div class="increment-section">
-            <button onclick="decrement(this)">-</button>
-            <span class="increment-value">0</span>
-            <button onclick="increment(this, 4)">+</button>
-          </div>
-        </li>
-        <li class="product-item">
-          <span class="product-name">Kefir</span>
-          <input type="text" class="readonly-field" value="5" readonly />
-          <input
-            type="checkbox"
-            class="checkbox"
-            onchange="toggleIncrement(this)"
-          />
-          <div class="increment-section">
-            <button onclick="decrement(this)">-</button>
-            <span class="increment-value">0</span>
-            <button onclick="increment(this, 5)">+</button>
-          </div>
-        </li>
-        <li class="product-item">
-          <span class="product-name">Jajka</span>
-          <input type="text" class="readonly-field" value="2" readonly />
-          <input
-            type="checkbox"
-            class="checkbox"
-            onchange="toggleIncrement(this)"
-          />
-          <div class="increment-section">
-            <button onclick="decrement(this)">-</button>
-            <span class="increment-value">0</span>
-            <button onclick="increment(this, 2)">+</button>
-          </div>
-        </li>
-      </ul>
+    <!-- Header section -->
+    <header>
+      <h1>Przygotowanie Listy Zakupów</h1>
+    </header>
 
-      <button class="next-button" onclick="location.href='freezer.html'">
-        Next
-      </button>
+    <!-- Main content -->
+    <div class="container">
+      <!-- Product list -->
+      <div id="product-list"></div>
+
+      <!-- Buttons and validation message -->
+      <div class="button-container">
+        <button class="save-button" onclick="saveShoppingList()" disabled>
+          Zapisz Listę
+        </button>
+        <button class="next-button" onclick="location.href='zakupy.html'">
+          Ostatnie Zakupy
+        </button>
+      </div>
+      <p id="validation-message" class="validation-message"></p>
     </div>
 
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <!-- Firebase configuration and initialization -->
+    <script>
+      // Your Firebase configuration
+      const firebaseConfig = {
+        apiKey: 'AIzaSyBZ4-356GHxDO5rMknQ2v07FyOUpGnMzxE',
+        authDomain: 'shopping-app-c6474.firebaseapp.com',
+        databaseURL:
+          'https://shopping-app-c6474-default-rtdb.europe-west1.firebasedatabase.app',
+        projectId: 'shopping-app-c6474',
+        storageBucket: 'shopping-app-c6474.appspot.com',
+        messagingSenderId: '55536136637',
+        appId: '1:55536136637:web:58fe8e0f45c7bffcb8e2d4',
+        measurementId: 'G-ZZHPBYYXRL',
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <!-- Custom script -->
     <script src="script.js"></script>
   </body>
 </html>

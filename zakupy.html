@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ostatnie listy zakupów</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Header section -->
+    <header>
+      <h1>Ostatnie Listy Zakupów</h1>
+    </header>
+
+    <!-- Main content -->
+    <div class="container">
+      <!-- Shopping lists section -->
+      <div id="recent-shopping-lists"></div>
+    </div>
+
+    <!-- Button for returning to the main page -->
+    <div class="button-container">
+      <button class="back-button" onclick="location.href='index.html'">
+        Powrót
+      </button>
+    </div>
+
+    <!-- Include Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: 'AIzaSyBZ4-356GHxDO5rMknQ2v07FyOUpGnMzxE',
+        authDomain: 'shopping-app-c6474.firebaseapp.com',
+        databaseURL:
+          'https://shopping-app-c6474-default-rtdb.europe-west1.firebasedatabase.app',
+        projectId: 'shopping-app-c6474',
+        storageBucket: 'shopping-app-c6474.appspot.com',
+        messagingSenderId: '55536136637',
+        appId: '1:55536136637:web:58fe8e0f45c7bffcb8e2d4',
+        measurementId: 'G-ZZHPBYYXRL',
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Get a reference to the database
+      const db = firebase.database();
+
+      // Fetch and display the last three shopping lists
+      const shoppingListsRef = db.ref('shoppingLists').limitToLast(3);
+
+      shoppingListsRef.on('value', snapshot => {
+        const data = snapshot.val();
+        const listContainer = document.getElementById('recent-shopping-lists');
+        listContainer.innerHTML = ''; // Clear the list before appending
+
+        if (data) {
+          const lists = Object.entries(data).reverse(); // Get lists with keys
+
+          lists.forEach(([key, list]) => {
+            const listItem = document.createElement('li');
+            listItem.classList.add('product-item');
+
+            // Create hyperlink for each shopping list
+            const link = document.createElement('a');
+            link.href = `shopping-list.html?listId=${key}`; // Add list ID as a query parameter
+            link.textContent = `Lista Zakupów - ${new Date(
+              list.timestamp
+            ).toLocaleString()}`;
+            link.style.textDecoration = 'underline';
+            link.style.color = '#0000EE'; // Make it look like a hyperlink
+
+            // Append elements to the list item
+            listItem.appendChild(link);
+            listContainer.appendChild(listItem);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
