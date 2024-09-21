@@ -165,57 +165,44 @@ button {
   text-align: center;
 }
 
-/* Footer styles (optional) */
-footer {
-  background-color: var(--primary-color);
-  color: #ffffff;
-  text-align: center;
-  padding: 10px 0;
-  margin-top: 40px;
-}
-
-/* Responsive design */
+/* Responsive design for mobile */
 @media (max-width: 600px) {
   .container {
     width: 100%;
-    margin: 10px auto;
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 1.5em;
   }
 
   .product-item {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
+    padding: 10px;
   }
 
-  .product-name,
-  .readonly-field {
+  .product-name {
+    font-size: 1.2em;
     margin-bottom: 10px;
   }
 
-  /* Larger touch targets for mobile */
+  .readonly-field,
+  .checkbox {
+    width: auto;
+    margin-top: 10px;
+  }
+
+  .button-container button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
   .increment-section button,
   .increment-value {
     width: 40px;
     height: 40px;
     font-size: 20px;
   }
-
-  .checkbox {
-    width: 25px;
-    height: 25px;
-  }
-
-  /* Adjust button sizes for mobile */
-  button {
-    flex: 1 1 100%;
-    font-size: 20px;
-  }
-
-  .save-button,
-  .next-button {
-    margin-bottom: 10px;
-  }
-
-  .validation-message {
-    font-size: 18px;
-  }
-}
+    }
