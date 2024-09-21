@@ -55,11 +55,12 @@ header h1 {
 }
 
 .product-name {
-  flex-grow: 2;
+  flex: 2 1 50%;
   font-size: 18px;
 }
 
 .readonly-field {
+  flex: 1 1 15%;
   width: 40px;
   font-size: 18px;
   text-align: center;
@@ -68,14 +69,17 @@ header h1 {
   color: var(--text-color);
 }
 
-/* Custom checkbox styling */
+.checkbox-container {
+  flex: 0 1 10%;
+}
+
 .checkbox {
   width: 25px;
   height: 25px;
 }
 
-/* Increment Section */
 .increment-section {
+  flex: 1 1 25%;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -176,19 +180,21 @@ button {
     font-size: 1.5em;
   }
 
+  /* Remove flex-direction: column to maintain horizontal layout */
   .product-item {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
   }
 
   .product-name {
     font-size: 1.2em;
-    margin-bottom: 10px;
+    flex: 1 1 100%; /* Adjust to full width if needed */
   }
 
   .readonly-field,
-  .checkbox {
-    width: auto;
+  .checkbox-container,
+  .increment-section {
+    flex: 1 1 100%; /* Adjust widths on mobile */
     margin-top: 5px;
   }
 
