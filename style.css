@@ -42,35 +42,56 @@ header h1 {
   margin-top: 20px;
 }
 
+/* Flexbox layout for product-item with horizontal scroll */
 .product-item {
   background-color: #ffffff;
   border: 1px solid #dddddd;
   padding: 10px;
   margin: 10px 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* Left align items */
   align-items: center;
-  flex-wrap: wrap; /* Ensure elements wrap properly */
-  gap: 10px;
+  gap: 10px; /* Add space between items */
+  flex-wrap: nowrap; /* Prevent wrapping onto multiple lines */
+  overflow-x: auto; /* Enable horizontal scroll */
+  white-space: nowrap; /* Ensure content stays on one line */
 }
 
+/* Styling the horizontal scrollbar */
+.product-item::-webkit-scrollbar {
+  height: 8px;
+}
+
+.product-item::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+}
+
+.product-item::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
+
+/* Flex items in product-item */
 .product-name {
-  flex: 2 1 50%;
+  flex-shrink: 0; /* Prevent shrinking */
   font-size: 18px;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Handle long text with ellipsis */
 }
 
 .readonly-field {
-  flex: 1 1 15%;
-  width: 40px;
+  flex-shrink: 0;
+  width: 50px;
   font-size: 18px;
   text-align: center;
   border: none;
   background-color: transparent;
-  color: var(--text-color);
 }
 
 .checkbox-container {
-  flex: 0 1 10%;
+  flex-shrink: 0;
+  display: flex;
 }
 
 .checkbox {
@@ -79,10 +100,10 @@ header h1 {
 }
 
 .increment-section {
-  flex: 1 1 25%;
   display: flex;
   align-items: center;
   gap: 5px;
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .increment-section button,
@@ -93,12 +114,8 @@ header h1 {
   border: 2px solid var(--primary-color);
   background-color: #ffffff;
   color: var(--primary-color);
-  cursor: pointer;
   text-align: center;
   border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .increment-section button:hover {
@@ -109,7 +126,6 @@ header h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
   padding: 0 10px;
   min-width: 30px;
 }
@@ -169,7 +185,7 @@ button {
   text-align: center;
 }
 
-/* Responsive design for mobile */
+/* Media query for smaller screens */
 @media (max-width: 600px) {
   .container {
     width: 100%;
@@ -180,22 +196,31 @@ button {
     font-size: 1.5em;
   }
 
-  /* Remove flex-direction: column to maintain horizontal layout */
+  /* On smaller screens, allow wrapping */
   .product-item {
-    flex-wrap: wrap;
-    align-items: center;
+    flex-wrap: nowrap; /* Force elements to stay on one line */
+    overflow-x: auto; /* Enable horizontal scrolling */
   }
 
   .product-name {
-    font-size: 1.2em;
-    flex: 1 1 100%; /* Adjust to full width if needed */
+    flex-shrink: 1; /* Allow shrinking of long product names */
   }
 
   .readonly-field,
-  .checkbox-container,
-  .increment-section {
-    flex: 1 1 100%; /* Adjust widths on mobile */
-    margin-top: 5px;
+  .checkbox-container {
+    flex: 0 0 auto;
+  }
+
+  .increment-section button,
+  .increment-value {
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+  }
+
+  .save-button,
+  .next-button {
+    padding: 10px;
   }
 
   .button-container button {
@@ -203,10 +228,7 @@ button {
     margin-bottom: 10px;
   }
 
-  .increment-section button,
-  .increment-value {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
+  .validation-message {
+    font-size: 14px;
   }
 }

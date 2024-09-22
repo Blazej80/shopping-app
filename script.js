@@ -66,7 +66,7 @@ function validateSelections() {
 
   if (selectedItems.length === 0) {
     saveButton.disabled = true;
-    validationMessage.textContent = 'Please select at least one item.';
+    validationMessage.textContent = 'Wybierz przynajmniej jeden produkt';
     return;
   }
 
@@ -128,13 +128,14 @@ function saveShoppingList() {
     });
 }
 
-// Fetching and rendering products by homegroup
+// Fetching and rendering products by homegroup (limited to the first 2 items)
 function renderProductsByHomegroup(products) {
   const productContainer = document.getElementById('product-list');
   const groups = {};
 
-  // Group products by their homegroup
-  products.forEach(product => {
+  // Group products by their homegroup and limit to 2 items
+  products.forEach((product, index) => {
+    // Limit the display to the first two items
     const { homegroup } = product;
     if (!groups[homegroup]) {
       groups[homegroup] = [];
