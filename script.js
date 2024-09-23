@@ -135,7 +135,6 @@ function renderProductsByHomegroup(products) {
 
   // Group products by their homegroup and limit to 2 items
   products.forEach((product, index) => {
-    // Limit the display to the first two items
     const { homegroup } = product;
     if (!groups[homegroup]) {
       groups[homegroup] = [];
@@ -165,7 +164,7 @@ function renderProductsByHomegroup(products) {
     groups[groupName].sort((a, b) => a.homeorder - b.homeorder);
 
     groups[groupName].forEach(product => {
-      const maxValue = product.quantity; // Capture maxValue
+      const maxValue = product.quantity;
       const productElement = document.createElement('li');
       productElement.classList.add('product-item');
 
@@ -215,7 +214,7 @@ function renderProductsByHomegroup(products) {
       incrementButton.textContent = '+';
       incrementButton.setAttribute('aria-label', 'Increase quantity');
       incrementButton.addEventListener('click', () => {
-        increment(incrementButton, maxValue); // Use captured maxValue
+        increment(incrementButton, maxValue);
         validateSelections();
       });
 
@@ -227,7 +226,7 @@ function renderProductsByHomegroup(products) {
       // Assemble product item
       productElement.appendChild(productName);
       productElement.appendChild(readonlyField);
-      productElement.appendChild(checkboxContainer); // Add checkbox separately
+      productElement.appendChild(checkboxContainer);
       productElement.appendChild(incrementSection);
 
       productContainer.appendChild(productElement);

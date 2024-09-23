@@ -12,6 +12,8 @@
     <!-- Header section -->
     <header>
       <h1>Przygotowanie Listy Zakupów</h1>
+      <!-- Log Off button -->
+      <button class="logoff-button" onclick="logOff()">Log Off</button>
     </header>
 
     <!-- Main content -->
@@ -34,10 +36,10 @@
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
     <!-- Firebase configuration and initialization -->
     <script>
-      // Your Firebase configuration
       const firebaseConfig = {
         apiKey: 'AIzaSyBZ4-356GHxDO5rMknQ2v07FyOUpGnMzxE',
         authDomain: 'shopping-app-c6474.firebaseapp.com',
@@ -52,6 +54,20 @@
 
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
+
+      // Log Off function
+      function logOff() {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            console.log('User logged out');
+            window.location.href = 'login.html'; // Redirect to login page
+          })
+          .catch(error => {
+            console.error('Error logging out:', error);
+          });
+      }
     </script>
 
     <!-- Custom script -->
