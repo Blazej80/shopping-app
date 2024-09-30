@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Products to Firebase</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Add Products</h1>
+      <button onclick="addProductsToDatabase()">
+        Add Products to Firebase
+      </button>
+    </div>
+
+    <!-- Include Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: 'AIzaSyBZ4-356GHxDO5rMknQ2v07FyOUpGnMzxE',
+        authDomain: 'shopping-app-c6474.firebaseapp.com',
+        databaseURL:
+          'https://shopping-app-c6474-default-rtdb.europe-west1.firebasedatabase.app',
+        projectId: 'shopping-app-c6474',
+        storageBucket: 'shopping-app-c6474.appspot.com',
+        messagingSenderId: '55536136637',
+        appId: '1:55536136637:web:58fe8e0f45c7bffcb8e2d4',
+        measurementId: 'G-ZZHPBYYXRL',
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Get a reference to the database
+      const db = firebase.database();
+
+      // Function to add products to the database
+      function addProductsToDatabase() {
+        // Delete all existing products
+        db.ref('products')
+          .set(null)
+          .then(() => {
+            console.log('All existing products have been deleted.');
+
+            // New list of products
+            const products = [
+              {
+                name: 'Pieczywo',
+                homegroup: 'Blat 1',
+                quantity: 1,
+                homeorder: 205,
+                shoporder: 0,
+              },
+              {
+                name: 'Pieczywo tostowe',
+                homegroup: 'Blat 1',
+                quantity: 1,
+                homeorder: 210,
+                shoporder: 5,
+              },
+              {
+                name: 'Rzodkiewka',
+                homegroup: 'Lodówka 4',
+                quantity: 1,
+                homeorder: 65,
+                shoporder: 15,
+              },
+              {
+                name: 'Sałata',
+                homegroup: 'Lodówka 4',
+                quantity: 1,
+                homeorder: 70,
+                shoporder: 20,
+              },
+              {
+                name: 'Pietruszka zielona',
+                homegroup: 'Lodówka 4',
+                quantity: 1,
+                homeorder: 80,
+                shoporder: 25,
+              },
+              {
+                name: 'Jabłka',
+                homegroup: 'Blat 2',
+                quantity: 5,
+                homeorder: 220,
+                shoporder: 30,
+              },
+              {
+                name: 'Banany',
+                homegroup: 'Blat 2',
+                quantity: 6,
+                homeorder: 215,
+                shoporder: 35,
+              },
+              {
+                name: 'Nektarynki',
+                homegroup: 'Blat 2',
+                quantity: 3,
+                homeorder: 230,
+                shoporder: 40,
+              },
+              {
+                name: 'Borówki',
+                homegroup: 'Blat 2',
+                quantity: 1,
+                homeorder: 225,
+                shoporder: 45,
+              },
+              {
+                name: 'Pomidory',
+                homegroup: 'Blat 2',
+                quantity: 2,
+                homeorder: 235,
+                shoporder: 50,
+              },
+              {
+                name: 'Ogórek świeży',
+                homegroup: 'Blat 2',
+                quantity: 1,
+                homeorder: 240,
+                shoporder: 55,
+              },
+              {
+                name: 'Marchew',
+                homegroup: 'Lodówka 4',
+                quantity: 5,
+                homeorder: 85,
+                shoporder: 60,
+              },
+              {
+                name: 'Włoszczyzna',
+                homegroup: 'Lodówka 4',
+                quantity: 1,
+                homeorder: 75,
+                shoporder: 65,
+              },
+              {
+                name: 'Ziemniaki',
+                homegroup: 'Lodówka 4',
+                quantity: 1,
+                homeorder: 60,
+                shoporder: 70,
+              },
+              {
+                name: 'Ocet',
+                homegroup: 'Półki dół 3',
+                quantity: 1,
+                homeorder: 355,
+                shoporder: 72,
+              },
+              {
+                name: 'Kostka rosołowa',
+                homegroup: 'Półki góra 2',
+                quantity: 2,
+                homeorder: 245,
+                shoporder: 75,
+              },
+              {
+                name: 'Ziele angielskie',
+                homegroup: 'Półki góra 2',
+                quantity: 1,
+                homeorder: 250,
+                shoporder: 80,
+              },
+              {
+                name: 'Liść laurowy',
+                homegroup: 'Półki góra 2',
+                quantity: 1,
+                homeorder: 255,
+                shoporder: 85,
+              },
+              {
+                name: 'Zioła prowansalskie',
+                homegroup: 'Półki góra 2',
+                quantity: 1,
+                homeorder: 260,
+                shoporder: 90,
+              },
+              {
+                name: 'Sardynki w puszce',
+                homegroup: 'Półki dół 1',
+                quantity: 3,
+                homeorder: 315,
+                shoporder: 95,
+              },
+              {
+                name: 'Tuńczyk w puszce',
+                homegroup: 'Półki dół 1',
+                quantity: 4,
+                homeorder: 305,
+                shoporder: 100,
+              },
+              {
+                name: 'Kukurydza w puszce',
+                homegroup: 'Półki dół 1',
+                quantity: 1,
+                homeorder: 295,
+                shoporder: 105,
+              },
+              {
+                name: 'Fasola w puszce',
+                homegroup: 'Półki dół 1',
+                quantity: 4,
+                homeorder: 300,
+                shoporder: 110,
+              },
+              {
+                name: 'Groszek w puszce',
+                homegroup: 'Półki dół 1',
+                quantity: 1,
+                homeorder: 310,
+                shoporder: 115,
+              },
+              {
+                name: 'Ogórki konserwowe małe',
+                homegroup: 'Lodówka bok',
+                quantity: 1,
+                homeorder: 115,
+                shoporder: 120,
+              },
+              {
+                name: 'Oliwki',
+                homegroup: 'Lodówka bok',
+                quantity: 1,
+                homeorder: 110,
+                shoporder: 125,
+              },
+              {
+                name: 'Buraki w słoiku',
+                homegroup: 'Lodówka 3',
+                quantity: 1,
+                homeorder: 55,
+                shoporder: 130,
+              },
+              {
+                name: 'Orzechy',
+                homegroup: 'Półki góra 1',
+                quantity: 1,
+                homeorder: 200,
+                shoporder: 135,
+              },
+              {
+                name: 'Ser zółty',
+                homegroup: 'Lodówka 2',
+                quantity: 5,
+                homeorder: 35,
+                shoporder: 140,
+              },
+              {
+                name: 'Szynka z indyka',
+                homegroup: 'Lodówka 2',
+                quantity: 6,
+                homeorder: 30,
+                shoporder: 145,
+              },
+              {
+                name: 'Almette',
+                homegroup: 'Lodówka 1',
+                quantity: 2,
+                homeorder: 10,
+                shoporder: 150,
+              },
+              {
+                name: 'Mięso mielone',
+                homegroup: 'Lodówka 3',
+                quantity: 1,
+                homeorder: 40,
+                shoporder: 155,
+              },
+              {
+                name: 'Łosoś',
+                homegroup: 'Lodówka 3',
+                quantity: 1,
+                homeorder: 50,
+                shoporder: 160,
+              },
+              {
+                name: 'Melisa',
+                homegroup: 'Półki góra 3',
+                quantity: 1,
+                homeorder: 280,
+                shoporder: 165,
+              },
+              {
+                name: 'Herbata czarna',
+                homegroup: 'Półki góra 3',
+                quantity: 1,
+                homeorder: 270,
+                shoporder: 170,
+              },
+              {
+                name: 'Kawa',
+                homegroup: 'Półki góra 3',
+                quantity: 1,
+                homeorder: 275,
+                shoporder: 173,
+              },
+              {
+                name: 'Piersi z kurczaka',
+                homegroup: 'Lodówka 3',
+                quantity: 1,
+                homeorder: 45,
+                shoporder: 175,
+              },
+              {
+                name: 'Serek homogenizowany',
+                homegroup: 'Lodówka 1',
+                quantity: 4,
+                homeorder: 20,
+                shoporder: 180,
+              },
+              {
+                name: 'Ser klimek',
+                homegroup: 'Lodówka 1',
+                quantity: 2,
+                homeorder: 15,
+                shoporder: 185,
+              },
+              {
+                name: 'Kefir',
+                homegroup: 'Lodówka bok',
+                quantity: 5,
+                homeorder: 120,
+                shoporder: 190,
+              },
+              {
+                name: 'Masło',
+                homegroup: 'Lodówka bok',
+                quantity: 2,
+                homeorder: 100,
+                shoporder: 195,
+              },
+              {
+                name: 'Masło klarowane',
+                homegroup: 'Lodówka 1',
+                quantity: 2,
+                homeorder: 5,
+                shoporder: 200,
+              },
+              {
+                name: 'Warzywa mrożone',
+                homegroup: 'Zamrażarka',
+                quantity: 3,
+                homeorder: 130,
+                shoporder: 205,
+              },
+              {
+                name: 'Truskawki mrożone',
+                homegroup: 'Zamrażarka',
+                quantity: 2,
+                homeorder: 140,
+                shoporder: 210,
+              },
+              {
+                name: 'Lody',
+                homegroup: 'Zamrażarka',
+                quantity: 1,
+                homeorder: 135,
+                shoporder: 215,
+              },
+              {
+                name: 'Makaron świderki',
+                homegroup: 'Półki góra 1',
+                quantity: 1,
+                homeorder: 155,
+                shoporder: 220,
+              },
+              {
+                name: 'Spagetti',
+                homegroup: 'Półki góra 1',
+                quantity: 1,
+                homeorder: 160,
+                shoporder: 225,
+              },
+              {
+                name: 'Makaron rosół',
+                homegroup: 'Półki góra 1',
+                quantity: 1,
+                homeorder: 165,
+                shoporder: 230,
+              },
+              {
+                name: 'Ryż',
+                homegroup: 'Półki góra 1',
+                quantity: 2,
+                homeorder: 170,
+                shoporder: 235,
+              },
+              {
+                name: 'Kasza gryczana',
+                homegroup: 'Półki góra 1',
+                quantity: 2,
+                homeorder: 175,
+                shoporder: 240,
+              },
+              {
+                name: 'Kasza perłowa',
+                homegroup: 'Półki góra 1',
+                quantity: 2,
+                homeorder: 180,
+                shoporder: 245,
+              },
+              {
+                name: 'Przecier pomidorowy',
+                homegroup: 'Półki dół 1',
+                quantity: 3,
+                homeorder: 290,
+                shoporder: 250,
+              },
+              {
+                name: 'Ketchup',
+                homegroup: 'Lodówka bok',
+                quantity: 1,
+                homeorder: 125,
+                shoporder: 252,
+              },
+              {
+                name: 'Passata',
+                homegroup: 'Półki dół 1',
+                quantity: 1,
+                homeorder: 285,
+                shoporder: 255,
+              },
+              {
+                name: 'Jajka',
+                homegroup: 'Lodówka 2',
+                quantity: 2,
+                homeorder: 25,
+                shoporder: 260,
+              },
+              {
+                name: 'Galaretki',
+                homegroup: 'Półki góra 2',
+                quantity: 1,
+                homeorder: 265,
+                shoporder: 265,
+              },
+              {
+                name: 'Mąka',
+                homegroup: 'Półki góra 1',
+                quantity: 1,
+                homeorder: 145,
+                shoporder: 275,
+              },
+              {
+                name: 'Bułka tarta',
+                homegroup: 'Półki góra 1',
+                quantity: 1,
+                homeorder: 150,
+                shoporder: 280,
+              },
+              {
+                name: 'Mleczko do kawy',
+                homegroup: 'Lodówka bok',
+                quantity: 3,
+                homeorder: 95,
+                shoporder: 285,
+              },
+              {
+                name: 'Mleko bez laktozy',
+                homegroup: 'Lodówka bok',
+                quantity: 1,
+                homeorder: 90,
+                shoporder: 290,
+              },
+              {
+                name: 'Płatki owsiane',
+                homegroup: 'Półki góra 1',
+                quantity: 2,
+                homeorder: 185,
+                shoporder: 295,
+              },
+              {
+                name: 'Płatki kukurydziane',
+                homegroup: 'Półki góra 1',
+                quantity: 1,
+                homeorder: 190,
+                shoporder: 300,
+              },
+              {
+                name: 'Płatki czekoladowe',
+                homegroup: 'Półki góra 1',
+                quantity: 1,
+                homeorder: 195,
+                shoporder: 305,
+              },
+              {
+                name: 'Dżem truskawkowy',
+                homegroup: 'Lodówka bok',
+                quantity: 1,
+                homeorder: 105,
+                shoporder: 310,
+              },
+              {
+                name: 'Miód',
+                homegroup: 'Półki góra 1',
+                quantity: 1,
+                homeorder: 197,
+                shoporder: 315,
+              },
+              {
+                name: 'Szampon dla dzieci',
+                homegroup: 'Łazienka',
+                quantity: 1,
+                homeorder: 385,
+                shoporder: 320,
+              },
+              {
+                name: 'Płyn do mycia dla dzieci',
+                homegroup: 'Łazienka',
+                quantity: 1,
+                homeorder: 390,
+                shoporder: 325,
+              },
+              {
+                name: 'Mydło w płynie',
+                homegroup: 'Łazienka',
+                quantity: 1,
+                homeorder: 360,
+                shoporder: 330,
+              },
+              {
+                name: 'Mydło w kostce',
+                homegroup: 'Łazienka',
+                quantity: 2,
+                homeorder: 365,
+                shoporder: 335,
+              },
+              {
+                name: 'Patyczki do uszu',
+                homegroup: 'Łazienka',
+                quantity: 1,
+                homeorder: 370,
+                shoporder: 340,
+              },
+              {
+                name: 'Płatki kosmetyczne',
+                homegroup: 'Łazienka',
+                quantity: 1,
+                homeorder: 375,
+                shoporder: 345,
+              },
+              {
+                name: 'Tabletki zmywarka',
+                homegroup: 'Półki dół 3',
+                quantity: 1,
+                homeorder: 330,
+                shoporder: 350,
+              },
+              {
+                name: 'Proszek zmywarka',
+                homegroup: 'Półki dół 3',
+                quantity: 1,
+                homeorder: 335,
+                shoporder: 355,
+              },
+              {
+                name: 'Gąbki',
+                homegroup: 'Półki dół 3',
+                quantity: 1,
+                homeorder: 340,
+                shoporder: 360,
+              },
+              {
+                name: 'Płyn do naczyń',
+                homegroup: 'Półki dół 3',
+                quantity: 1,
+                homeorder: 345,
+                shoporder: 365,
+              },
+              {
+                name: 'Płyn do podłóg',
+                homegroup: 'Półki dół 3',
+                quantity: 1,
+                homeorder: 350,
+                shoporder: 370,
+              },
+              {
+                name: 'Worki na śmieci',
+                homegroup: 'Półki dół 2',
+                quantity: 4,
+                homeorder: 325,
+                shoporder: 375,
+              },
+              {
+                name: 'Ręcznik papierowy',
+                homegroup: 'Półki dół 2',
+                quantity: 1,
+                homeorder: 320,
+                shoporder: 380,
+              },
+              {
+                name: 'Papier toaletowy',
+                homegroup: 'Łazienka',
+                quantity: 1,
+                homeorder: 380,
+                shoporder: 385,
+              },
+            ];
+
+            // Add each product to the 'products' node
+            const productsRef = db.ref('products');
+            const promises = products.map(product => {
+              return productsRef.push(product);
+            });
+
+            Promise.all(promises)
+              .then(() => {
+                console.log('All new products have been added.');
+                alert('All new products have been added to Firebase.');
+              })
+              .catch(error => {
+                console.error('Error adding products:', error);
+              });
+          })
+          .catch(error => {
+            console.error('Error deleting existing products:', error);
+          });
+      }
+    </script>
+  </body>
+</html>

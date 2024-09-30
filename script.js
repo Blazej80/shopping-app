@@ -128,120 +128,133 @@ function saveShoppingList() {
     });
 }
 
+// Authentication check before interacting with Realtime Database
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    // User is authenticated, proceed with database interaction
+    console.log('User is signed in:', user.uid);
+    fetchAndRenderData(); // Call function to fetch and render data
+  } else {
+    // User is not authenticated, redirect to the login page
+    console.log('No user is signed in.');
+    window.location.href = 'login.html'; // Redirect to login page if not authenticated
+  }
+});
+
 // Fetching and rendering products by homegroup (limited to the first 2 items)
-function renderProductsByHomegroup(products) {
+function fetchAndRenderData() {
   const productContainer = document.getElementById('product-list');
   const groups = {};
 
-  // Group products by their homegroup and limit to 2 items
-  products.forEach((product, index) => {
-    const { homegroup } = product;
-    if (!groups[homegroup]) {
-      groups[homegroup] = [];
-    }
-    groups[homegroup].push(product);
-  });
+  // Fetch products from database
+  firebase
+    .database()
+    .ref('products')
+    .once('value', snapshot => {
+      const products = Object.values(snapshot.val());
 
-  // Get and sort group names
-  const groupNames = Object.keys(groups);
-  const groupOrder = {};
-
-  groupNames.forEach(groupName => {
-    const productsInGroup = groups[groupName];
-    const minHomeorder = Math.min(...productsInGroup.map(p => p.homeorder));
-    groupOrder[groupName] = minHomeorder;
-  });
-
-  groupNames.sort((a, b) => groupOrder[a] - groupOrder[b]);
-
-  // Render products grouped by homegroup, sorted by homeorder
-  groupNames.forEach(groupName => {
-    const groupHeader = document.createElement('h2');
-    groupHeader.textContent = groupName;
-    productContainer.appendChild(groupHeader);
-
-    // Sort products within the group
-    groups[groupName].sort((a, b) => a.homeorder - b.homeorder);
-
-    groups[groupName].forEach(product => {
-      const maxValue = product.quantity;
-      const productElement = document.createElement('li');
-      productElement.classList.add('product-item');
-
-      // Create elements
-      const productName = document.createElement('span');
-      productName.classList.add('product-name');
-      productName.textContent = product.name;
-
-      const readonlyField = document.createElement('input');
-      readonlyField.type = 'text';
-      readonlyField.classList.add('readonly-field');
-      readonlyField.value = product.quantity;
-      readonlyField.readOnly = true;
-
-      // Create a container for the checkbox
-      const checkboxContainer = document.createElement('div');
-      checkboxContainer.classList.add('checkbox-container');
-
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.classList.add('checkbox');
-      checkbox.id = `checkbox-${product.name}`;
-
-      checkbox.addEventListener('change', () => {
-        toggleIncrement(checkbox);
+      // Group products by their homegroup and limit to 2 items
+      products.forEach((product, index) => {
+        // Limit the display to the first two items
+        const { homegroup } = product;
+        if (!groups[homegroup]) {
+          groups[homegroup] = [];
+        }
+        groups[homegroup].push(product);
       });
 
-      checkboxContainer.appendChild(checkbox);
+      // Get and sort group names
+      const groupNames = Object.keys(groups);
+      const groupOrder = {};
 
-      // Assemble increment section
-      const incrementSection = document.createElement('div');
-      incrementSection.classList.add('increment-section', 'hidden'); // Hidden by default
-
-      const decrementButton = document.createElement('button');
-      decrementButton.textContent = '-';
-      decrementButton.setAttribute('aria-label', 'Decrease quantity');
-      decrementButton.addEventListener('click', () => {
-        decrement(decrementButton);
-        validateSelections();
+      groupNames.forEach(groupName => {
+        const productsInGroup = groups[groupName];
+        const minHomeorder = Math.min(...productsInGroup.map(p => p.homeorder));
+        groupOrder[groupName] = minHomeorder;
       });
 
-      const incrementValue = document.createElement('span');
-      incrementValue.classList.add('increment-value');
-      incrementValue.textContent = '1';
+      groupNames.sort((a, b) => groupOrder[a] - groupOrder[b]);
 
-      const incrementButton = document.createElement('button');
-      incrementButton.textContent = '+';
-      incrementButton.setAttribute('aria-label', 'Increase quantity');
-      incrementButton.addEventListener('click', () => {
-        increment(incrementButton, maxValue);
-        validateSelections();
+      // Render products grouped by homegroup, sorted by homeorder
+      groupNames.forEach(groupName => {
+        const groupHeader = document.createElement('h2');
+        groupHeader.textContent = groupName;
+        productContainer.appendChild(groupHeader);
+
+        // Sort products within the group
+        groups[groupName].sort((a, b) => a.homeorder - b.homeorder);
+
+        groups[groupName].forEach(product => {
+          const maxValue = product.quantity; // Capture maxValue
+          const productElement = document.createElement('li');
+          productElement.classList.add('product-item');
+
+          // Create elements
+          const productName = document.createElement('span');
+          productName.classList.add('product-name');
+          productName.textContent = product.name;
+
+          const readonlyField = document.createElement('input');
+          readonlyField.type = 'text';
+          readonlyField.classList.add('readonly-field');
+          readonlyField.value = product.quantity;
+          readonlyField.readOnly = true;
+
+          // Create a container for the checkbox
+          const checkboxContainer = document.createElement('div');
+          checkboxContainer.classList.add('checkbox-container');
+
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.classList.add('checkbox');
+          checkbox.id = `checkbox-${product.name}`;
+
+          checkbox.addEventListener('change', () => {
+            toggleIncrement(checkbox);
+          });
+
+          checkboxContainer.appendChild(checkbox);
+
+          // Assemble increment section
+          const incrementSection = document.createElement('div');
+          incrementSection.classList.add('increment-section', 'hidden'); // Hidden by default
+
+          const decrementButton = document.createElement('button');
+          decrementButton.textContent = '-';
+          decrementButton.setAttribute('aria-label', 'Decrease quantity');
+          decrementButton.addEventListener('click', () => {
+            decrement(decrementButton);
+            validateSelections();
+          });
+
+          const incrementValue = document.createElement('span');
+          incrementValue.classList.add('increment-value');
+          incrementValue.textContent = '1';
+
+          const incrementButton = document.createElement('button');
+          incrementButton.textContent = '+';
+          incrementButton.setAttribute('aria-label', 'Increase quantity');
+          incrementButton.addEventListener('click', () => {
+            increment(incrementButton, maxValue); // Use captured maxValue
+            validateSelections();
+          });
+
+          // Append elements to increment section
+          incrementSection.appendChild(decrementButton);
+          incrementSection.appendChild(incrementValue);
+          incrementSection.appendChild(incrementButton);
+
+          // Assemble product item
+          productElement.appendChild(productName);
+          productElement.appendChild(readonlyField);
+          productElement.appendChild(checkboxContainer); // Add checkbox separately
+          productElement.appendChild(incrementSection);
+
+          productContainer.appendChild(productElement);
+        });
       });
 
-      // Append elements to increment section
-      incrementSection.appendChild(decrementButton);
-      incrementSection.appendChild(incrementValue);
-      incrementSection.appendChild(incrementButton);
-
-      // Assemble product item
-      productElement.appendChild(productName);
-      productElement.appendChild(readonlyField);
-      productElement.appendChild(checkboxContainer);
-      productElement.appendChild(incrementSection);
-
-      productContainer.appendChild(productElement);
+      // Initial validation
+      validateSelections();
     });
-  });
-
-  // Initial validation
-  validateSelections();
 }
-
-// Fetch products from database and render
-firebase
-  .database()
-  .ref('products')
-  .once('value', snapshot => {
-    const products = Object.values(snapshot.val());
-    renderProductsByHomegroup(products);
-  });

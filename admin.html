@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Admin Panel: Approve Users</h1>
+    </header>
+    <div class="container">
+      <div id="user-list"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <script>
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: 'AIzaSyBZ4-356GHxDO5rMknQ2v07FyOUpGnMzxE',
+        authDomain: 'shopping-app-c6474.firebaseapp.com',
+        databaseURL:
+          'https://shopping-app-c6474-default-rtdb.europe-west1.firebasedatabase.app',
+        projectId: 'shopping-app-c6474',
+        storageBucket: 'shopping-app-c6474.appspot.com',
+        messagingSenderId: '55536136637',
+        appId: '1:55536136637:web:58fe8e0f45c7bffcb8e2d4',
+        measurementId: 'G-ZZHPBYYXRL',
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const database = firebase.database();
+
+      // Display users who need approval
+      function displayUsers() {
+        const userList = document.getElementById('user-list');
+        userList.innerHTML = ''; // Clear previous list
+
+        database.ref('users').once('value', snapshot => {
+          const users = snapshot.val();
+          for (const userId in users) {
+            const user = users[userId];
+            const userDiv = document.createElement('div');
+            userDiv.innerHTML = `
+              <p>Email: ${user.email}</p>
+              <p>Approved: ${user.approved}</p>
+            `;
+
+            if (!user.approved) {
+              const approveButton = document.createElement('button');
+              approveButton.textContent = 'Approve User';
+              approveButton.onclick = () => approveUser(userId);
+              userDiv.appendChild(approveButton);
+            }
+
+            userList.appendChild(userDiv);
+          }
+        });
+      }
+
+      // Function to approve a user
+      function approveUser(userId) {
+        database
+          .ref('users/' + userId)
+          .update({ approved: true })
+          .then(() => {
+            alert('User approved successfully!');
+            displayUsers(); // Refresh the list
+          })
+          .catch(error => {
+            console.error('Error approving user:', error);
+          });
+      }
+
+      // Show users on page load
+      displayUsers();
+    </script>
+  </body>
+</html>
